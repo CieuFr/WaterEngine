@@ -11,7 +11,6 @@
 #include "utils/victor_utils.hpp"
 #include "utils/skybox.hpp"
 
-
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
@@ -151,14 +150,12 @@ int main()
         skyboxShader.setMat4("projection", projection);
         skybox.render();
 
-
         ImGui::Begin("ImGui Window");
         ImGui::Text("Text");
         ImGui::Checkbox("DrawTriangle", &drawTriangle);
         ImGui::SliderFloat("Size", &size, 0.5f, 2.0f);
         ImGui::ColorEdit4("ColorOrange", colorOrange);
         ImGui::ColorEdit4("ColorYellow", colorYellow);
-
 
         ImGui::End();
         ImGui::Render();
@@ -181,6 +178,7 @@ int main()
     // optional: de-allocate all resources once they've outlived their purpose:
     // ------------------------------------------------------------------------
     cube.cleanUp();
+    skybox.cleanUp();
 
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------

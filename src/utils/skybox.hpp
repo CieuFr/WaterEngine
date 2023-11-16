@@ -101,7 +101,8 @@ public:
     }
 
     void cleanUp() {
-       
+        glDeleteVertexArrays(1, &skyboxVAO);
+        glDeleteBuffers(1, &skyboxVBO);
     }
    
 
