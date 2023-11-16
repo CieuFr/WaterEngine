@@ -2,7 +2,7 @@
 #define __RANDOM_HPP__
 
 #include <random>
-#include "../define.hpp"
+#include "define.hpp"
 
 
 static std::random_device rd;

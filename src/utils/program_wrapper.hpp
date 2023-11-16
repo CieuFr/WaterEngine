@@ -2,7 +2,6 @@
 #ifndef __PROGRAM_WRAPPER__
 #define __PROGRAM_WRAPPER__
 
-#include "GL/gl3w.h"
 #include "victor_utils.hpp"
 #include <iostream>
 #include <string>
@@ -31,13 +30,15 @@ class ProgramWrapper
 
 	bool createProgram( std::string* path )
 	{
+		std::ifstream test(path[0]);
+		if (!test)
+		{
+			std::cout << "The file doesn't exist" << std::endl;
+			std::cout << path[0] << std::endl;
+		}
 		const std::string vertexShaderStr = readFile( path[0] );
 		const std::string fragShaderStr	  = readFile( path[1] );
 
-		std::cout << "vertexShaderStr : " << vertexShaderStr
-				  << "\ n ";
-
-			std::cout << "fragShaderStr : " << fragShaderStr << "\ n ";
 		// Création des shaders
 		const GLuint aVertexShader	 = glCreateShader( GL_VERTEX_SHADER );
 		const GLuint aFragmentShader = glCreateShader( GL_FRAGMENT_SHADER );

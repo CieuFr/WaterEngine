@@ -13,12 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Fichiers sources\common">
-      <UniqueIdentifier>{256ea435-cd46-4c04-92c8-80f733b83b5a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Fichiers sources\common\models">
-      <UniqueIdentifier>{14f49e94-1faa-401c-a973-ff4533b6aafb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Fichiers sources\shaders">
       <UniqueIdentifier>{1f462518-2e39-44a1-b142-df074f574640}</UniqueIdentifier>
     </Filter>
@@ -33,32 +27,14 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\application.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="src\main.cpp">
       <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="src\lab_work_8.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
-    <ClCompile Include="src\common\camera.cpp">
-      <Filter>Fichiers sources\common</Filter>
-    </ClCompile>
-    <ClCompile Include="src\common\models\triangle_mesh.cpp">
-      <Filter>Fichiers sources\common\models</Filter>
-    </ClCompile>
-    <ClCompile Include="src\common\models\triangle_mesh_model.cpp">
-      <Filter>Fichiers sources\common\models</Filter>
     </ClCompile>
     <ClCompile Include="src\utils\image.cpp">
       <Filter>Fichiers sources\utils</Filter>
     </ClCompile>
     <ClCompile Include="src\utils\random.cpp">
       <Filter>Fichiers sources\utils</Filter>
-    </ClCompile>
-    <ClCompile Include="src\common\TrackBallCamera.cpp">
-      <Filter>Fichiers sources\common</Filter>
     </ClCompile>
     <ClCompile Include="src\glad.c">
       <Filter>Fichiers sources</Filter>
@@ -86,32 +62,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\application.hpp">
-      <Filter>Fichiers sources</Filter>
-    </ClInclude>
     <ClInclude Include="src\define.hpp">
       <Filter>Fichiers sources</Filter>
-    </ClInclude>
-    <ClInclude Include="src\lab_work_8.hpp">
-      <Filter>Fichiers sources</Filter>
-    </ClInclude>
-    <ClInclude Include="src\common\base_lab_work.hpp">
-      <Filter>Fichiers sources\common</Filter>
-    </ClInclude>
-    <ClInclude Include="src\common\BaseCamera.hpp">
-      <Filter>Fichiers sources\common</Filter>
-    </ClInclude>
-    <ClInclude Include="src\common\camera.hpp">
-      <Filter>Fichiers sources\common</Filter>
-    </ClInclude>
-    <ClInclude Include="src\common\models\base_model.hpp">
-      <Filter>Fichiers sources\common\models</Filter>
-    </ClInclude>
-    <ClInclude Include="src\common\models\triangle_mesh.hpp">
-      <Filter>Fichiers sources\common\models</Filter>
-    </ClInclude>
-    <ClInclude Include="src\common\models\triangle_mesh_model.hpp">
-      <Filter>Fichiers sources\common\models</Filter>
     </ClInclude>
     <ClInclude Include="src\utils\file_path.hpp">
       <Filter>Fichiers sources\utils</Filter>
@@ -133,9 +85,6 @@
     </ClInclude>
     <ClInclude Include="src\utils\random.hpp">
       <Filter>Fichiers sources\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="src\common\TrackBallCamera.hpp">
-      <Filter>Fichiers sources\common</Filter>
     </ClInclude>
     <ClInclude Include="TinyObjectLoader.h">
       <Filter>Fichiers sources\utils</Filter>
@@ -170,6 +119,24 @@
     <ClInclude Include="Include\imgui\imgui.h">
       <Filter>Fichiers d%27en-tête\imgui</Filter>
     </ClInclude>
+    <ClInclude Include="src\utils\camera.hpp">
+      <Filter>Fichiers sources\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\define.hpp">
+      <Filter>Fichiers sources\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\shader.hpp">
+      <Filter>Fichiers sources\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\cube.hpp">
+      <Filter>Fichiers sources\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\skybox.hpp">
+      <Filter>Fichiers sources\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\utils\stb_image.h">
+      <Filter>Fichiers sources\utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shaders\geometry_pass.frag">
@@ -194,6 +161,12 @@
       <Filter>Fichiers sources\shaders</Filter>
     </None>
     <None Include="src\shaders\ssao_blur.vert">
+      <Filter>Fichiers sources\shaders</Filter>
+    </None>
+    <None Include="src\shaders\mesh.vert">
+      <Filter>Fichiers sources\shaders</Filter>
+    </None>
+    <None Include="src\shaders\mesh.frag">
       <Filter>Fichiers sources\shaders</Filter>
     </None>
   </ItemGroup>

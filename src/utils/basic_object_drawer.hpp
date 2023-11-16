@@ -1,12 +1,9 @@
 #pragma once
 
-
-#include "GL/gl3w.h"
-#include "victor_utils.hpp"
 #include <iostream>
 #include <string>
 #include <vector>
-#include "glm/gtc/type_ptr.hpp"
+#include "define.hpp"
 
 class Mesh
 {
@@ -22,6 +19,14 @@ class Mesh
 	GLuint					  VBOColors				= GL_INVALID_VALUE;
 	GLuint					  VAO					= GL_INVALID_VALUE;
 	GLuint					  EBO					= GL_INVALID_VALUE;
+
+	void cleanUp() {
+		glDeleteBuffers(1, &VBOVertices);
+		glDeleteBuffers(1, &VBOColors);
+		glDeleteBuffers(1, &EBO);
+		glDeleteVertexArrays(1, &VAO);
+	}
+
 };
 
 
@@ -137,7 +142,7 @@ class BasicObjectDrawer
 
 		glVertexArrayElementBuffer( cube.VAO, cube.EBO );
 
-		// cube.transformationMatrice = Mat4f( 1.0f );
+		cube.transformationMatrice = Mat4f( 1.0f );
 		//cube.transformationMatrice = glm::scale( cube.transformationMatrice, glm::vec( 0.8f, 0.8f, 0.8f ) );
 
 		return cube;
