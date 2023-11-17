@@ -137,36 +137,33 @@
     <ClInclude Include="src\utils\stb_image.h">
       <Filter>Fichiers sources\utils</Filter>
     </ClInclude>
+    <ClInclude Include="src\utils\sphere.hpp">
+      <Filter>Fichiers sources\utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\shaders\geometry_pass.frag">
+    <None Include="src\shaders\1.colors.fs">
       <Filter>Fichiers sources\shaders</Filter>
     </None>
-    <None Include="src\shaders\geometry_pass.vert">
+    <None Include="src\shaders\1.colors.vs">
       <Filter>Fichiers sources\shaders</Filter>
     </None>
-    <None Include="src\shaders\lighting_pass.frag">
+    <None Include="src\shaders\1.light_cube.fs">
       <Filter>Fichiers sources\shaders</Filter>
     </None>
-    <None Include="src\shaders\lighting_pass.vert">
+    <None Include="src\shaders\1.light_cube.vs">
       <Filter>Fichiers sources\shaders</Filter>
     </None>
-    <None Include="src\shaders\ssao.frag">
+    <None Include="src\shaders\manual_pbr.fs">
       <Filter>Fichiers sources\shaders</Filter>
     </None>
-    <None Include="src\shaders\ssao.vert">
+    <None Include="src\shaders\manual_pbr.vs">
       <Filter>Fichiers sources\shaders</Filter>
     </None>
-    <None Include="src\shaders\ssao_blur.frag">
+    <None Include="src\shaders\skybox.fs">
       <Filter>Fichiers sources\shaders</Filter>
     </None>
-    <None Include="src\shaders\ssao_blur.vert">
-      <Filter>Fichiers sources\shaders</Filter>
-    </None>
-    <None Include="src\shaders\mesh.vert">
-      <Filter>Fichiers sources\shaders</Filter>
-    </None>
-    <None Include="src\shaders\mesh.frag">
+    <None Include="src\shaders\skybox.vs">
       <Filter>Fichiers sources\shaders</Filter>
     </None>
   </ItemGroup>

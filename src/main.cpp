@@ -10,6 +10,7 @@
 #include "utils/cube.hpp"
 #include "utils/victor_utils.hpp"
 #include "utils/skybox.hpp"
+#include "utils/sphere.hpp"
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -30,8 +31,20 @@ bool firstMouse = true;
 float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
-// lighting
-glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
+// lights
+// ------
+glm::vec3 lightPositions[] = {
+    glm::vec3(-10.0f,  10.0f, 10.0f),
+    glm::vec3(10.0f,  10.0f, 10.0f),
+    glm::vec3(-10.0f, -10.0f, 10.0f),
+    glm::vec3(10.0f, -10.0f, 10.0f),
+};
+glm::vec3 lightColors[] = {
+    glm::vec3(300.0f, 300.0f, 300.0f),
+    glm::vec3(300.0f, 300.0f, 300.0f),
+    glm::vec3(300.0f, 300.0f, 300.0f),
+    glm::vec3(300.0f, 300.0f, 300.0f)
+};
 
 
 int main()
@@ -76,17 +89,34 @@ int main()
     // -----------------------------
     glEnable(GL_DEPTH_TEST);
 
+    // init projection matrix
+    glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+
     // build and compile our shader zprogram
     // ------------------------------------
     const std::string shaderFolder = "src/shaders/";
     Shader lightingShader("src/shaders/1.colors.vs", "src/shaders/1.colors.fs");
     Shader lightCubeShader("src/shaders/1.light_cube.vs", "src/shaders/1.light_cube.fs");
     Shader skyboxShader("src/shaders/skybox.vs", "src/shaders/skybox.fs");
-    Cube cube;
-    Skybox skybox;
+    Shader manualPBR("src/shaders/manual_pbr.vs", "src/shaders/manual_pbr.fs");
+
+
+    // INIT STATIC UNIFORM PARAMETER 
     skyboxShader.use();
     skyboxShader.setInt("skybox", 0);
 
+    manualPBR.use();
+    manualPBR.setVec3("albedo", 0.5f, 0.0f, 0.0f);
+    manualPBR.setFloat("ao", 1.0f);
+    manualPBR.use();
+    manualPBR.setMat4("projection", projection);
+
+    // DECLARE GEOMETRY
+    Cube cube;
+    Skybox skybox;
+    Sphere sphere;
+
+    // INIT IMGUI
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
@@ -94,10 +124,10 @@ int main()
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 450");
 
+    //IMGUI VARIABLES
     bool drawTriangle = true;
-    float size = 1.0;
-    float colorOrange[4] = { 1.0f, 0.5f, 0.2f, 1.0f };
-    float colorYellow[4] = { 1.0f, 1.0f, 0.0f, 1.0f };
+    float roughness = 0.5f;
+    float metallic = 0.5f;
 
 
     // render loop
@@ -114,6 +144,9 @@ int main()
         // -----
         processInput(window);
 
+        //camera update
+        glm::mat4 model = glm::mat4(1.0f);
+        glm::mat4 view = camera.GetViewMatrix();
 
         // render
         // ------
@@ -124,24 +157,52 @@ int main()
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
+        //// be sure to activate shader when setting uniforms/drawing objects
+        //lightingShader.use();
+        //lightingShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
+        //lightingShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
 
-        // be sure to activate shader when setting uniforms/drawing objects
-        lightingShader.use();
-        lightingShader.setVec3("objectColor", 1.0f, 0.5f, 0.31f);
-        lightingShader.setVec3("lightColor", 1.0f, 1.0f, 1.0f);
+        //// view/projection transformation
+        //lightingShader.setMat4("projection", projection);
+        //lightingShader.setMat4("view", view);
+        //// world transformation
+        //lightingShader.setMat4("model", model);
 
-        // view/projection transformations
-        glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
-        glm::mat4 view = camera.GetViewMatrix();
-        lightingShader.setMat4("projection", projection);
-        lightingShader.setMat4("view", view);
 
-        // world transformation
-        glm::mat4 model = glm::mat4(1.0f);
-        lightingShader.setMat4("model", model);
-
+        manualPBR.use();
+        manualPBR.setMat4("view", view);
+        manualPBR.setVec3("camPos", camera.Position);
+         // we clamp the roughness to 0.05 - 1.0 as perfectly smooth surfaces (roughness of 0.0) tend to look a bit off
+         // on direct lighting.
+        manualPBR.setFloat("metallic",metallic);
+        manualPBR.setFloat("roughness", roughness);
+        model = glm::mat4(1.0f);
+        manualPBR.setMat4("model", model);
+        manualPBR.setMat3("normalMatrix", glm::transpose(glm::inverse(glm::mat3(model))));
         // render the cube
-        cube.render();
+        sphere.render();
+
+
+
+
+
+        // render light source (simply re-render sphere at light positions)
+       // this looks a bit off as we use the same shader, but it'll make their positions obvious and 
+       // keeps the codeprint small.
+        for (unsigned int i = 0; i < sizeof(lightPositions) / sizeof(lightPositions[0]); ++i)
+        {
+            glm::vec3 newPos = lightPositions[i] + glm::vec3(sin(glfwGetTime() * 5.0) * 5.0, 0.0, 0.0);
+            newPos = lightPositions[i];
+            manualPBR.setVec3("lightPositions[" + std::to_string(i) + "]", newPos);
+            manualPBR.setVec3("lightColors[" + std::to_string(i) + "]", lightColors[i]);
+
+            model = glm::mat4(1.0f);
+            model = glm::translate(model, newPos);
+            model = glm::scale(model, glm::vec3(0.5f));
+            manualPBR.setMat4("model", model);
+            manualPBR.setMat3("normalMatrix", glm::transpose(glm::inverse(glm::mat3(model))));
+            sphere.render();
+        }
 
         // render skybox 
         skyboxShader.use();
@@ -150,12 +211,13 @@ int main()
         skyboxShader.setMat4("projection", projection);
         skybox.render();
 
+
         ImGui::Begin("ImGui Window");
         ImGui::Text("Text");
         ImGui::Checkbox("DrawTriangle", &drawTriangle);
-        ImGui::SliderFloat("Size", &size, 0.5f, 2.0f);
-        ImGui::ColorEdit4("ColorOrange", colorOrange);
-        ImGui::ColorEdit4("ColorYellow", colorYellow);
+        ImGui::SliderFloat("Rougness", &roughness, 0.0f, 1.0f);
+        ImGui::SliderFloat("Metallic", &metallic, 0.05f, 1.0f);
+
 
         ImGui::End();
         ImGui::Render();

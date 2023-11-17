@@ -169,21 +169,20 @@
     <ClInclude Include="src\utils\random.hpp" />
     <ClInclude Include="src\utils\shader.hpp" />
     <ClInclude Include="src\utils\skybox.hpp" />
+    <ClInclude Include="src\utils\sphere.hpp" />
     <ClInclude Include="src\utils\stb_image.h" />
     <ClInclude Include="src\utils\victor_utils.hpp" />
     <ClInclude Include="TinyObjectLoader.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\shaders\geometry_pass.frag" />
-    <None Include="src\shaders\geometry_pass.vert" />
-    <None Include="src\shaders\lighting_pass.frag" />
-    <None Include="src\shaders\lighting_pass.vert" />
-    <None Include="src\shaders\mesh.frag" />
-    <None Include="src\shaders\mesh.vert" />
-    <None Include="src\shaders\ssao.frag" />
-    <None Include="src\shaders\ssao.vert" />
-    <None Include="src\shaders\ssao_blur.frag" />
-    <None Include="src\shaders\ssao_blur.vert" />
+    <None Include="src\shaders\1.colors.fs" />
+    <None Include="src\shaders\1.colors.vs" />
+    <None Include="src\shaders\1.light_cube.fs" />
+    <None Include="src\shaders\1.light_cube.vs" />
+    <None Include="src\shaders\manual_pbr.fs" />
+    <None Include="src\shaders\manual_pbr.vs" />
+    <None Include="src\shaders\skybox.fs" />
+    <None Include="src\shaders\skybox.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
