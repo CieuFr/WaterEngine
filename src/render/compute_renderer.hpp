@@ -1,29 +1,34 @@
-#ifndef MANUAL_PBR_RENDERER_H
-#define MANUAL_PBR_RENDERER_H
+#ifndef COMPUTE_RENDERER_H
+#define COMPUTE_RENDERER_H
 
 
 #include "base_renderer.hpp"
 
-#include "../utils/skybox.hpp"
-#include "../utils/sphere.hpp"
-#include "../utils/cube.hpp"
+
+#include "../utils/quad.hpp"
 
 
-class ManualPBRRenderer : public BaseRenderer
+
+
+
+class ComputeRenderer : public BaseRenderer
 {
 public:
 
-    ManualPBRRenderer() : BaseRenderer(){}
+    ComputeRenderer() : BaseRenderer() {}
 
-    ~ManualPBRRenderer(){   
-        glDeleteProgram(lightingShader->ID);
-        glDeleteProgram(lightCubeShader->ID);
-        glDeleteProgram(skyboxShader->ID);
-        glDeleteProgram(manualPBR->ID);
+    ~ComputeRenderer() {
+        glDeleteTextures(1, &texture);
+        glDeleteProgram(screenQuadShader->ID);
+        glDeleteProgram(computeShader->ID);
     }
 
 
+    // timing 
+    float deltaTime = 0.0f; // time between current frame and last frame
+    float lastFrame = 0.0f; // time of last frame
 
+   
     // settings
     const unsigned int SCR_WIDTH = 800;
     const unsigned int SCR_HEIGHT = 600;
@@ -52,20 +57,27 @@ public:
     glm::mat4 view = MAT4F_ID;
     // build and compile our shader zprogram
    // ------------------------------------
-    const std::string shaderFolder = "src/shaders/";
-    Shader* lightingShader = NULL;
-    Shader* lightCubeShader = NULL;
-    Shader* skyboxShader = NULL;
-    Shader* manualPBR = NULL;
 
-    Cube* cube = NULL;
-    Skybox* skybox = NULL;
-    Sphere* sphere  = NULL;
+    Shader* screenQuadShader = NULL;
+    ComputeShader* computeShader = NULL;
+
+    // query limitations
+    // -----------------
+    int max_compute_work_group_count[3];
+    int max_compute_work_group_size[3];
+    int max_compute_work_group_invocations;
+
+    Quad* quad = NULL;
+    unsigned int texture;
+
+    int fCounter = 0;
 
     //IMGUI VARIABLES
     bool drawTriangle = true;
     float roughness = 0.5f;
     float metallic = 0.5f;
+
+    const unsigned int TEXTURE_WIDTH = 1000, TEXTURE_HEIGHT = 1000;
 
     void init() override;
     void render() override;
@@ -74,9 +86,6 @@ public:
     void handleScrollEvents(GLFWwindow* window, double xoffset, double yoffset) override;
     void handleMouseEvents(GLFWwindow* window, double xposIn, double yposIn) override;
   
-
-
-
 
 private:
    

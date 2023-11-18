@@ -7,6 +7,8 @@
 #include <iostream>
 #include "utils/victor_utils.hpp"
 #include "render/manual_pbr_renderer.hpp"
+#include "render/compute_renderer.hpp"
+
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -21,15 +23,17 @@ float deltaTime = 0.0f;
 float lastFrame = 0.0f;
 
 // RENDERER USED
-ManualPBRRenderer renderer;
+ComputeRenderer renderer;
 
 
 int main()
 {
+    std::cout << "ok 0" << std::endl;
+
     // glfw: initialize and configure
     // ------------------------------
     glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
@@ -46,10 +50,12 @@ int main()
         glfwTerminate();
         return -1;
     }
+    std::cout << "ok 1" << std::endl;
     glfwMakeContextCurrent(window);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     glfwSetCursorPosCallback(window, mouse_callback);
     glfwSetScrollCallback(window, scroll_callback);
+    glfwSwapInterval(0);
 
     // tell GLFW to capture our mouse
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
@@ -66,17 +72,6 @@ int main()
     // -----------------------------
     glEnable(GL_DEPTH_TEST);
 
-
-    // build and compile our shader zprogram
-    // ------------------------------------
-    
-
-
-
-  
-
-  
-
     // INIT IMGUI
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -85,11 +80,10 @@ int main()
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init("#version 450");
 
-    
+    std::cout << "ok 2" << std::endl;
 
     renderer.init();
   
-
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window))
@@ -119,13 +113,11 @@ int main()
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-
         // glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
         // -------------------------------------------------------------------------------
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
-
 
     // ImGui stop
     ImGui_ImplOpenGL3_Shutdown();

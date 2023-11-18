@@ -16,6 +16,7 @@
 #include "../utils/define.hpp"
 #include <iostream>
 #include "../utils/shader.hpp"
+#include "../utils/compute_shader.hpp"
 #include "../utils/victor_utils.hpp"
 
 
