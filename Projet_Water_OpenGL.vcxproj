@@ -143,6 +143,7 @@
     <ClCompile Include="Include\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\glad.c" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\render\manual_pbr_renderer.cpp" />
     <ClCompile Include="src\utils\image.cpp" />
     <ClCompile Include="src\utils\random.cpp" />
   </ItemGroup>
@@ -158,14 +159,19 @@
     <ClInclude Include="Include\imgui\imstb_textedit.h" />
     <ClInclude Include="Include\imgui\imstb_truetype.h" />
     <ClInclude Include="src\define.hpp" />
+    <ClInclude Include="src\render\base_renderer.hpp" />
+    <ClInclude Include="src\render\manual_pbr_renderer.hpp" />
     <ClInclude Include="src\utils\basic_object_drawer.hpp" />
     <ClInclude Include="src\utils\camera.hpp" />
+    <ClInclude Include="src\utils\compute_shader.hpp" />
     <ClInclude Include="src\utils\cube.hpp" />
     <ClInclude Include="src\utils\define.hpp" />
+    <ClInclude Include="src\utils\filesystem.h" />
     <ClInclude Include="src\utils\file_path.hpp" />
     <ClInclude Include="src\utils\gl_utils.hpp" />
     <ClInclude Include="src\utils\image.hpp" />
     <ClInclude Include="src\utils\program_wrapper.hpp" />
+    <ClInclude Include="src\utils\quad.hpp" />
     <ClInclude Include="src\utils\random.hpp" />
     <ClInclude Include="src\utils\shader.hpp" />
     <ClInclude Include="src\utils\skybox.hpp" />
@@ -183,6 +189,8 @@
     <None Include="src\shaders\manual_pbr.vs" />
     <None Include="src\shaders\skybox.fs" />
     <None Include="src\shaders\skybox.vs" />
+    <None Include="src\shaders\water.fs" />
+    <None Include="src\shaders\water.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

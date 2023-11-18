@@ -11,49 +11,7 @@
 #include <iostream>
 
 
-float vertices[] = {
-       -0.5f, -0.5f, -0.5f,
-        0.5f, -0.5f, -0.5f,
-        0.5f,  0.5f, -0.5f,
-        0.5f,  0.5f, -0.5f,
-       -0.5f,  0.5f, -0.5f,
-       -0.5f, -0.5f, -0.5f,
 
-       -0.5f, -0.5f,  0.5f,
-        0.5f, -0.5f,  0.5f,
-        0.5f,  0.5f,  0.5f,
-        0.5f,  0.5f,  0.5f,
-       -0.5f,  0.5f,  0.5f,
-       -0.5f, -0.5f,  0.5f,
-
-       -0.5f,  0.5f,  0.5f,
-       -0.5f,  0.5f, -0.5f,
-       -0.5f, -0.5f, -0.5f,
-       -0.5f, -0.5f, -0.5f,
-       -0.5f, -0.5f,  0.5f,
-       -0.5f,  0.5f,  0.5f,
-
-        0.5f,  0.5f,  0.5f,
-        0.5f,  0.5f, -0.5f,
-        0.5f, -0.5f, -0.5f,
-        0.5f, -0.5f, -0.5f,
-        0.5f, -0.5f,  0.5f,
-        0.5f,  0.5f,  0.5f,
-
-       -0.5f, -0.5f, -0.5f,
-        0.5f, -0.5f, -0.5f,
-        0.5f, -0.5f,  0.5f,
-        0.5f, -0.5f,  0.5f,
-       -0.5f, -0.5f,  0.5f,
-       -0.5f, -0.5f, -0.5f,
-
-       -0.5f,  0.5f, -0.5f,
-        0.5f,  0.5f, -0.5f,
-        0.5f,  0.5f,  0.5f,
-        0.5f,  0.5f,  0.5f,
-       -0.5f,  0.5f,  0.5f,
-       -0.5f,  0.5f, -0.5f,
-};
 
 class Cube
 {
@@ -61,10 +19,50 @@ public:
     unsigned int VBO, cubeVAO;
     
     Cube() {
-        init();
-    }
-    
-    void init() {
+        float vertices[] = {
+       -0.5f, -0.5f, -0.5f,
+        0.5f, -0.5f, -0.5f,
+        0.5f,  0.5f, -0.5f,
+        0.5f,  0.5f, -0.5f,
+       -0.5f,  0.5f, -0.5f,
+       -0.5f, -0.5f, -0.5f,
+
+       -0.5f, -0.5f,  0.5f,
+        0.5f, -0.5f,  0.5f,
+        0.5f,  0.5f,  0.5f,
+        0.5f,  0.5f,  0.5f,
+       -0.5f,  0.5f,  0.5f,
+       -0.5f, -0.5f,  0.5f,
+
+       -0.5f,  0.5f,  0.5f,
+       -0.5f,  0.5f, -0.5f,
+       -0.5f, -0.5f, -0.5f,
+       -0.5f, -0.5f, -0.5f,
+       -0.5f, -0.5f,  0.5f,
+       -0.5f,  0.5f,  0.5f,
+
+        0.5f,  0.5f,  0.5f,
+        0.5f,  0.5f, -0.5f,
+        0.5f, -0.5f, -0.5f,
+        0.5f, -0.5f, -0.5f,
+        0.5f, -0.5f,  0.5f,
+        0.5f,  0.5f,  0.5f,
+
+       -0.5f, -0.5f, -0.5f,
+        0.5f, -0.5f, -0.5f,
+        0.5f, -0.5f,  0.5f,
+        0.5f, -0.5f,  0.5f,
+       -0.5f, -0.5f,  0.5f,
+       -0.5f, -0.5f, -0.5f,
+
+       -0.5f,  0.5f, -0.5f,
+        0.5f,  0.5f, -0.5f,
+        0.5f,  0.5f,  0.5f,
+        0.5f,  0.5f,  0.5f,
+       -0.5f,  0.5f,  0.5f,
+       -0.5f,  0.5f, -0.5f,
+        };
+
         glGenVertexArrays(1, &cubeVAO);
         glGenBuffers(1, &VBO);
 
@@ -78,16 +76,18 @@ public:
         glEnableVertexAttribArray(0);
     }
 
+    ~Cube() {
+        glDeleteVertexArrays(1, &cubeVAO);
+        glDeleteBuffers(1, &VBO);
+
+    }
+
     void render() {
         glBindVertexArray(cubeVAO);
         glDrawArrays(GL_TRIANGLES, 0, 36);
     }
 
-    void cleanUp() {
-        glDeleteVertexArrays(1, &cubeVAO);
-        glDeleteBuffers(1, &VBO);
-    }
-   
+  
 
 private:
    

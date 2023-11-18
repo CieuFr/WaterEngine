@@ -19,10 +19,6 @@ public:
     unsigned int vbo, ebo;
     
     Sphere() {
-        init();
-    }
-    
-    void init() {
         glGenVertexArrays(1, &sphereVAO);
         glGenBuffers(1, &vbo);
         glGenBuffers(1, &ebo);
@@ -105,24 +101,17 @@ public:
         glEnableVertexAttribArray(2);
         glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, stride, (void*)(6 * sizeof(float)));
     }
+    
+    ~Sphere() {
+        glDeleteVertexArrays(1, &sphereVAO);
+        glDeleteBuffers(1, &vbo);
+        glDeleteBuffers(1, &ebo);
+    }
 
     void render() {
         glBindVertexArray(sphereVAO);
         glDrawElements(GL_TRIANGLE_STRIP, indexCount, GL_UNSIGNED_INT, 0);
     }
-
-    void cleanUp() {
-        glDeleteVertexArrays(1, &sphereVAO);
-        glDeleteBuffers(1, &vbo);
-        glDeleteBuffers(1, &ebo);
-
-    }
-   
-
-   
-
-
-
 
 private:
    

@@ -29,7 +29,7 @@ static float myLerp( float a, float b, float f ) { return a + f * ( b - a ); }
 
 // utility function for loading a 2D texture from file
 // ---------------------------------------------------
-unsigned int loadTexture(char const* path)
+inline unsigned int loadTexture(char const* path)
 {
     unsigned int textureID;
     glGenTextures(1, &textureID);
@@ -75,7 +75,7 @@ unsigned int loadTexture(char const* path)
 // +Z (front) 
 // -Z (back)
 // -------------------------------------------------------
-unsigned int loadCubemap(std::vector<std::string> faces)
+inline unsigned int loadCubemap(std::vector<std::string> faces)
 {
     unsigned int textureID;
     glGenTextures(1, &textureID);
